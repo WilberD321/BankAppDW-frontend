@@ -264,6 +264,11 @@ button:disabled {
   align-self: flex-end;
 }
 
+.search-field {
+  max-width: 320px;
+  margin: 16px 0;
+}
+
 .tab-group {
   display: flex;
   gap: 8px;

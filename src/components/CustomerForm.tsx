@@ -4,6 +4,8 @@ import { useCreateCustomer } from "../hooks/useCreateCustomer";
 import { useUpdateCustomer } from "../hooks/useUpdateCustomer";
 import type { Customer } from "../types/customer";
 
+const CUSTOMER_ID_PATTERN = /^c\d{3}$/;
+
 interface CustomerFormProps {
   mode: "create" | "edit";
   customer?: Customer;
@@ -11,6 +13,8 @@ interface CustomerFormProps {
 }
 
 export function CustomerForm({ mode, customer, onSuccess }: CustomerFormProps) {
+  const [customerId, setCustomerId] = useState("");
+  const [customerIdError, setCustomerIdError] = useState<string | null>(null);
   const [name, setName] = useState(customer?.name ?? "");
   const [email, setEmail] = useState(customer?.email ?? "");
 
@@ -20,23 +24,48 @@ export function CustomerForm({ mode, customer, onSuccess }: CustomerFormProps) {
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
-    const payload = { name, email: email || undefined };
 
     if (mode === "create") {
-      createMutation.mutate(payload, {
-        onSuccess: () => {
-          setName("");
-          setEmail("");
-          onSuccess?.();
-        },
-      });
+      if (customerId && !CUSTOMER_ID_PATTERN.test(customerId)) {
+        setCustomerIdError("Customer ID must look like c001 (c followed by 3 digits)");
+        return;
+      }
+      setCustomerIdError(null);
+
+      createMutation.mutate(
+        { id: customerId || undefined, name, email: email || undefined },
+        {
+          onSuccess: () => {
+            setCustomerId("");
+            setName("");
+            setEmail("");
+            onSuccess?.();
+          },
+        }
+      );
     } else {
-      updateMutation.mutate(payload, { onSuccess });
+      updateMutation.mutate({ name, email: email || undefined }, { onSuccess });
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
+      {mode === "create" && (
+        <div className="form-field">
+          <label htmlFor="customer_id">Customer ID (optional)</label>
+          <input
+            id="customer_id"
+            value={customerId}
+            onChange={(event) => {
+              setCustomerId(event.target.value);
+              setCustomerIdError(null);
+            }}
+            placeholder="Auto-generated if left blank, e.g. c001"
+          />
+          {customerIdError && <p role="alert">{customerIdError}</p>}
+        </div>
+      )}
+
       <div className="form-field">
         <label htmlFor="customer_name">Name</label>
         <input

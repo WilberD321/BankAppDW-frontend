@@ -5,6 +5,7 @@ export interface Customer {
 }
 
 export interface CustomerCreate {
+  id?: string;
   name: string;
   email?: string;
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router";
 import { useTransactions } from "../hooks/useTransactions";
+import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import { TransactionTable } from "../components/TransactionTable";
 import type { TransactionFilters } from "../types/transaction";
 
@@ -11,12 +12,14 @@ export function TransactionsPage() {
   const [type, setType] = useState("");
   const [fromAccountId, setFromAccountId] = useState("");
   const [toAccountId, setToAccountId] = useState("");
+  const debouncedFromAccountId = useDebouncedValue(fromAccountId, 250);
+  const debouncedToAccountId = useDebouncedValue(toAccountId, 250);
 
   const filters: TransactionFilters = {
     start_date: startDate || undefined,
     type: type || undefined,
-    from_account_id: fromAccountId || undefined,
-    to_account_id: toAccountId || undefined,
+    from_account_id: debouncedFromAccountId || undefined,
+    to_account_id: debouncedToAccountId || undefined,
   };
 
   const { data, isLoading, isError, error } = useTransactions(filters);
