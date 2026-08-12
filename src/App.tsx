@@ -1,35 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchJson } from "./lib/apiClient";
-
-interface Customer {
-  id: string;
-  name: string;
-  email: string | null;
-}
+import { Routes, Route } from "react-router";
+import { Taskbar } from "./components/Taskbar";
+import { CustomerListPage } from "./pages/CustomerListPage";
+import { CustomerDetailPage } from "./pages/CustomerDetailPage";
 
 function App() {
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["customers"],
-    queryFn: () => fetchJson<Customer[]>("/api/v1/customers"),
-  });
-
   return (
-    <main>
-      <h1>BankAppDW</h1>
-      <h2>Customers</h2>
-      {isLoading && <p>Loading...</p>}
-      {isError && <p>Failed to load customers: {(error as Error).message}</p>}
-      {data && (
-        <ul>
-          {data.map((customer) => (
-            <li key={customer.id}>
-              {customer.id} — {customer.name}
-              {customer.email ? ` (${customer.email})` : ""}
-            </li>
-          ))}
-        </ul>
-      )}
-    </main>
+    <>
+      <Taskbar />
+      <main>
+        <Routes>
+          <Route path="/" element={<CustomerListPage />} />
+          <Route path="/customers/:id" element={<CustomerDetailPage />} />
+        </Routes>
+      </main>
+    </>
   );
 }
 
