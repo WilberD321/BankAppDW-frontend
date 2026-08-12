@@ -49,6 +49,9 @@ body {
   color: var(--mint-text);
   padding: 18px 24px;
   box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  gap: 32px;
 }
 
 .taskbar-brand {
@@ -56,6 +59,28 @@ body {
   font-weight: 600;
   font-size: 22px;
   letter-spacing: -0.3px;
+}
+
+.taskbar-nav {
+  display: flex;
+  gap: 20px;
+}
+
+.taskbar-nav a {
+  color: var(--mint-text);
+  opacity: 0.8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.taskbar-nav a:hover {
+  opacity: 1;
+}
+
+.taskbar-nav a.active {
+  opacity: 1;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 h1,
@@ -128,10 +153,244 @@ td {
   text-align: left;
 }
 
-tr[data-clickable] {
-  cursor: pointer;
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 360px;
+  margin-top: 16px;
 }
 
-tr[data-clickable]:hover {
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+input,
+select {
+  font: inherit;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: #fff;
+  color: var(--text);
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+button {
+  font: inherit;
+  font-weight: 500;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  background: var(--mint);
+  color: var(--mint-text);
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+button:hover:not(:disabled) {
+  background: var(--mint-hover);
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.button-secondary:hover:not(:disabled) {
   background: var(--code-bg);
+}
+
+.button-danger {
+  background: #c0392b;
+  color: #fff;
+}
+
+.button-danger:hover:not(:disabled) {
+  background: #a5321f;
+}
+
+.button-sm {
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.inline-panel {
+  margin: 16px 0;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--code-bg);
+}
+
+.inline-panel form {
+  margin-top: 0;
+}
+
+.button-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin: 16px 0;
+}
+
+.filter-row > button {
+  align-self: flex-end;
+}
+
+.tab-group {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.tab-group button {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.tab-group button:hover:not(.active) {
+  background: var(--code-bg);
+}
+
+.tab-group button.active {
+  background: var(--mint);
+  color: var(--mint-text);
+  border-color: var(--mint);
+}
+
+.customer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.customer-card,
+.account-card {
+  display: block;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+a.customer-card:hover,
+a.account-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent-border);
+  box-shadow: rgba(0, 0, 0, 0.12) 0 12px 18px -4px, rgba(0, 0, 0, 0.06) 0 4px 6px -2px;
+}
+
+.customer-card-header {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: start;
+}
+
+.customer-card-id {
+  grid-column: 1;
+  justify-self: start;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+.customer-card-name {
+  grid-column: 2;
+  font-family: var(--heading);
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--text-h);
+  text-align: center;
+}
+
+.customer-card-details {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.customer-card-details p {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.75;
+}
+
+.account-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.account-card-id {
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 22px;
+  color: var(--text-h);
+  text-align: center;
+}
+
+.account-card-balance {
+  margin-top: 6px;
+  font-family: var(--heading);
+  font-weight: 600;
+  font-size: 20px;
+  color: var(--accent);
+  text-align: center;
+}
+
+.account-card-details {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account-card-details p {
+  font-size: 13px;
+  color: var(--text);
+  opacity: 0.75;
+  text-align: center;
+}
+
+.account-card-actions {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 8px;
 }
