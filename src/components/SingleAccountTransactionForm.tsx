@@ -12,6 +12,7 @@ interface SingleAccountTransactionFormProps {
   actionLabel: string;
   pendingLabel: string;
   errorPrefix: string;
+  initialAccountId?: string;
 }
 
 export function SingleAccountTransactionForm({
@@ -19,8 +20,9 @@ export function SingleAccountTransactionForm({
   actionLabel,
   pendingLabel,
   errorPrefix,
+  initialAccountId,
 }: SingleAccountTransactionFormProps) {
-  const [accountId, setAccountId] = useState("");
+  const [accountId, setAccountId] = useState(initialAccountId ?? "");
   const [amount, setAmount] = useState("");
 
   function handleSubmit(event: FormEvent) {

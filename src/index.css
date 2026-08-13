@@ -83,6 +83,22 @@ body {
   text-underline-offset: 4px;
 }
 
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.taskbar .nav-user button {
+  color: var(--mint-text);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.taskbar .nav-user button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+}
+
 h1,
 h2 {
   font-family: var(--heading);
@@ -244,6 +260,16 @@ button:disabled {
 
 .inline-panel form {
   margin-top: 0;
+}
+
+.login-page {
+  max-width: 360px;
+  margin: 64px auto;
+}
+
+.change-password-panel {
+  max-width: 400px;
+  margin: 16px auto;
 }
 
 .button-row {

@@ -6,6 +6,8 @@ import { useDeleteCustomer } from "../hooks/useDeleteCustomer";
 import { EditableAccountCard } from "../components/EditableAccountCard";
 import { CustomerForm } from "../components/CustomerForm";
 import { AccountForm } from "../components/AccountForm";
+import { CreateLoginForm } from "../components/CreateLoginForm";
+import { EditCustomerLoginForm } from "../components/EditCustomerLoginForm";
 
 export function CustomerDetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -16,6 +18,8 @@ export function CustomerDetailPage() {
 
   const [isEditing, setIsEditing] = useState(false);
   const [isCreatingAccount, setIsCreatingAccount] = useState(false);
+  const [isCreatingLogin, setIsCreatingLogin] = useState(false);
+  const [isEditingLogin, setIsEditingLogin] = useState(false);
 
   const sortedAccounts = useMemo(
     () => [...(accountsQuery.data ?? [])].sort((a, b) => a.id.localeCompare(b.id)),
@@ -68,12 +72,42 @@ export function CustomerDetailPage() {
             >
               {deleteCustomerMutation.isPending ? "Deleting…" : "Delete customer"}
             </button>
+            <button
+              type="button"
+              className="button-secondary button-sm"
+              onClick={() => setIsCreatingLogin((current) => !current)}
+            >
+              {isCreatingLogin ? "Cancel" : "+ Create login"}
+            </button>
+            <button
+              type="button"
+              className="button-secondary button-sm"
+              onClick={() => setIsEditingLogin((current) => !current)}
+            >
+              {isEditingLogin ? "Cancel" : "Edit login"}
+            </button>
           </div>
           {deleteCustomerMutation.isError && (
             <p role="alert">
               Failed to delete customer:{" "}
               {(deleteCustomerMutation.error as Error).message}
             </p>
+          )}
+          {isCreatingLogin && (
+            <div className="inline-panel">
+              <CreateLoginForm
+                customerId={customerQuery.data.id}
+                onSuccess={() => setIsCreatingLogin(false)}
+              />
+            </div>
+          )}
+          {isEditingLogin && (
+            <div className="inline-panel">
+              <EditCustomerLoginForm
+                customerId={customerQuery.data.id}
+                onSuccess={() => setIsEditingLogin(false)}
+              />
+            </div>
           )}
         </div>
       )}

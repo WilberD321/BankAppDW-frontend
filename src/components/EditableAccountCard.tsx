@@ -39,7 +39,7 @@ export function EditableAccountCard({ account }: EditableAccountCardProps) {
 
   return (
     <div>
-      <AccountCard account={account} />
+      <AccountCard account={account} linkToTransactions />
       <div className="account-card-actions">
         <button
           type="button"

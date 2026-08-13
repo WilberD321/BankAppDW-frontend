@@ -1,10 +1,12 @@
 import { useMemo, useState } from "react";
+import { useNavigate } from "react-router";
 import { useAccounts } from "../hooks/useAccounts";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 import { AccountCard } from "../components/AccountCard";
 import { AccountForm } from "../components/AccountForm";
 
 export function AllAccountsPage() {
+  const navigate = useNavigate();
   const [isCreating, setIsCreating] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebouncedValue(searchTerm, 250);
@@ -54,7 +56,18 @@ export function AllAccountsPage() {
       {sortedAccounts.length > 0 && (
         <div className="account-grid">
           {sortedAccounts.map((account) => (
-            <AccountCard key={account.id} account={account} linkToOwner />
+            <div key={account.id}>
+              <AccountCard account={account} linkToOwner />
+              <div className="account-card-actions">
+                <button
+                  type="button"
+                  className="button-secondary button-sm"
+                  onClick={() => navigate(`/transactions/${account.id}`)}
+                >
+                  Make a transaction
+                </button>
+              </div>
+            </div>
           ))}
         </div>
       )}

@@ -4,6 +4,7 @@ import type { Account } from "../types/account";
 interface AccountCardProps {
   account: Account;
   linkToOwner?: boolean;
+  linkToTransactions?: boolean;
 }
 
 const currencyFormatter = new Intl.NumberFormat(undefined, {
@@ -11,7 +12,11 @@ const currencyFormatter = new Intl.NumberFormat(undefined, {
   currency: "USD",
 });
 
-export function AccountCard({ account, linkToOwner = false }: AccountCardProps) {
+export function AccountCard({
+  account,
+  linkToOwner = false,
+  linkToTransactions = false,
+}: AccountCardProps) {
   const body = (
     <>
       <div className="account-card-id">{account.id}</div>
@@ -27,6 +32,14 @@ export function AccountCard({ account, linkToOwner = false }: AccountCardProps) 
   if (linkToOwner) {
     return (
       <Link to={`/customers/${account.owner_id}`} className="account-card">
+        {body}
+      </Link>
+    );
+  }
+
+  if (linkToTransactions) {
+    return (
+      <Link to={`/transactions/${account.id}`} className="account-card">
         {body}
       </Link>
     );

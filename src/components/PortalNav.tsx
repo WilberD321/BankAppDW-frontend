@@ -3,7 +3,7 @@ import { NavLink } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import { ChangePasswordForm } from "./ChangePasswordForm";
 
-export function Taskbar() {
+export function PortalNav() {
   const { session, logout } = useAuth();
   const [isChangingPassword, setIsChangingPassword] = useState(false);
 
@@ -13,9 +13,8 @@ export function Taskbar() {
         <span className="taskbar-brand">BankAppDW</span>
         <nav className="taskbar-nav">
           <NavLink to="/" end>
-            Customers
+            My accounts
           </NavLink>
-          <NavLink to="/accounts">All accounts</NavLink>
           <NavLink to="/transactions">Transactions</NavLink>
         </nav>
         <div className="nav-user">

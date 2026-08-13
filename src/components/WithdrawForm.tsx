@@ -1,7 +1,11 @@
 import { useCreateWithdraw } from "../hooks/useCreateWithdraw";
 import { SingleAccountTransactionForm } from "./SingleAccountTransactionForm";
 
-export function WithdrawForm() {
+interface WithdrawFormProps {
+  initialAccountId?: string;
+}
+
+export function WithdrawForm({ initialAccountId }: WithdrawFormProps) {
   const mutation = useCreateWithdraw();
 
   return (
@@ -10,6 +14,7 @@ export function WithdrawForm() {
       actionLabel="Withdraw"
       pendingLabel="Withdrawing…"
       errorPrefix="Failed to create withdrawal"
+      initialAccountId={initialAccountId}
     />
   );
 }

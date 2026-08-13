@@ -2,7 +2,11 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { useCreateTransaction } from "../hooks/useCreateTransaction";
 
-export function TransferForm() {
+interface TransferFormProps {
+  prefillAccountId?: string;
+}
+
+export function TransferForm({ prefillAccountId }: TransferFormProps) {
   const [fromAccountId, setFromAccountId] = useState("");
   const [toAccountId, setToAccountId] = useState("");
   const [amount, setAmount] = useState("");
@@ -36,6 +40,15 @@ export function TransferForm() {
           onChange={(event) => setFromAccountId(event.target.value)}
           required
         />
+        {prefillAccountId && (
+          <button
+            type="button"
+            className="button-secondary button-sm"
+            onClick={() => setFromAccountId(prefillAccountId)}
+          >
+            Use current account ({prefillAccountId})
+          </button>
+        )}
       </div>
 
       <div className="form-field">
@@ -46,6 +59,15 @@ export function TransferForm() {
           onChange={(event) => setToAccountId(event.target.value)}
           required
         />
+        {prefillAccountId && (
+          <button
+            type="button"
+            className="button-secondary button-sm"
+            onClick={() => setToAccountId(prefillAccountId)}
+          >
+            Use current account ({prefillAccountId})
+          </button>
+        )}
       </div>
 
       <div className="form-field">

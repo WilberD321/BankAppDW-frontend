@@ -1,7 +1,11 @@
 import { useCreateDeposit } from "../hooks/useCreateDeposit";
 import { SingleAccountTransactionForm } from "./SingleAccountTransactionForm";
 
-export function DepositForm() {
+interface DepositFormProps {
+  initialAccountId?: string;
+}
+
+export function DepositForm({ initialAccountId }: DepositFormProps) {
   const mutation = useCreateDeposit();
 
   return (
@@ -10,6 +14,7 @@ export function DepositForm() {
       actionLabel="Deposit"
       pendingLabel="Depositing…"
       errorPrefix="Failed to create deposit"
+      initialAccountId={initialAccountId}
     />
   );
 }
